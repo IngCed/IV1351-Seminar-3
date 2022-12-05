@@ -1,4 +1,4 @@
-/**/
+/*The first query*/
 
 SELECT  (
         SELECT COUNT(*)
@@ -17,7 +17,7 @@ SELECT  (
         FROM   ensemble
         ) AS ensemble;
 
-/**/
+/*The second query*/
   
 SELECT (
   SELECT COUNT(*) FROM student) - (SELECT COUNT(DISTINCT sibling_id) FROM student_sibling INNER JOIN student ON 
@@ -31,7 +31,8 @@ SELECT (
   SELECT count(*) FROM (SELECT student_id FROM (SELECT student.id,student.student_id FROM student_sibling INNER JOIN student ON 
   student.id=student_sibling.student_id) as tempTable group by student_id having count (student_id)>1)as tempTable2) AS two_siblings;
 
-/**/
+/*The third query*/
+
 SELECT * FROM(select instructor.id AS instructor_id,instructor.instructor_id AS instructor_id_with_more_than_one_lesson FROM lesson 
 INNER JOIN instructor ON lesson.instructor_id=instructor.id) as tempTable1 group by instructor_id,instructor_id_with_more_than_one_lesson 
 having count (instructor_id_with_more_than_one_lesson)>1 ORDER BY instructor_id;
@@ -43,7 +44,8 @@ instructor.instructor_id AS instructor_id_with_more_than_one_lesson FROM lesson 
 lesson.instructor_id=instructor.id) as tempTable1 group by id_with_more_than_one_lesson,instructor_id_with_more_than_one_lesson having 
 count (instructor_id_with_more_than_one_lesson)>1) AS table2 ON id=id_with_more_than_one_lesson)AS tableTest group by id order by 
 number_of_given_lessons DESC, instructor_id;
-/**/
+
+/*The fourth query*/
 
 select lesson_id AS ensemble_id,genre,enrollment_amount,max_enrollment_amount,time_slot_id,time from (select tempTable1.lesson_id,
 tempTable1.genre,tempTable1.enrollment_amount,tempTable1.max_enrollment_amount,tempTable1.time_slot_id,time from time_slot inner join 
